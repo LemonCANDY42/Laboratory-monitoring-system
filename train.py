@@ -56,7 +56,6 @@ datamodule = VideoClassificationData.from_folders(
     val_folder="./videos",
     clip_sampler="uniform",
     clip_duration=2,
-    num_workers=0,
     decode_audio=False,
     train_transform=make_transform(train_post_tensor_transform),
     val_transform=make_transform(val_post_tensor_transform),
