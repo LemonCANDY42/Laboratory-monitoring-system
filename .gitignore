@@ -205,3 +205,9 @@ $RECYCLE.BIN/
 
 # videos
 *.mp4
+
+# lightning_logs
+/lightning_logs/*
+
+# model
+*.pt
