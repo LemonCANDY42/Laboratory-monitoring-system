@@ -14,12 +14,7 @@ import kornia.augmentation as K
 from pytorchvideo.transforms import ApplyTransformToKey, RandomShortSideScale, UniformTemporalSubsample
 from torch.utils.data.sampler import RandomSampler
 from torchvision.transforms import CenterCrop, Compose, RandomCrop, RandomHorizontalFlip
-# from visualize_video import dataset
-# train_dataset = dataset
-# datamodule = VideoClassificationData.from_fiftyone(
-# train_dataset=train_dataset,
-# val_dataset=train_dataset,
-# )
+
 
 # 2. Specify transforms to be used during training.
 # Flash helps you to place your transform exactly where you want.
@@ -51,11 +46,14 @@ def make_transform(
         ]),
     }
 
-datamodule = VideoClassificationData.from_folders(
-    train_folder="./videos",
-    val_folder="./videos",
+from visualize_video import dataset
+train_dataset = dataset
+datamodule = VideoClassificationData.from_fiftyone(
+    train_dataset=train_dataset,
+    val_dataset=train_dataset,
     clip_sampler="uniform",
     clip_duration=2,
+    video_sampler=RandomSampler,
     decode_audio=False,
     train_transform=make_transform(train_post_tensor_transform),
     val_transform=make_transform(val_post_tensor_transform),
@@ -64,35 +62,46 @@ datamodule = VideoClassificationData.from_folders(
 )
 
 
+
+# datamodule = VideoClassificationData.from_folders(
+#     train_folder="./videos/train",
+#     val_folder="./videos/train",
+#     clip_sampler="uniform",
+#     clip_duration=2,
+#     video_sampler=RandomSampler,
+#     decode_audio=False,
+#     train_transform=make_transform(train_post_tensor_transform),
+#     val_transform=make_transform(val_post_tensor_transform),
+#     test_transform=make_transform(val_post_tensor_transform),
+#     predict_transform=make_transform(val_post_tensor_transform),
+# )
+
+# 0. List the available models
+print(VideoClassifier.available_backbones())
+# out: ['efficient_x3d_s', 'efficient_x3d_xs', ... ,slowfast_r50', 'x3d_m', 'x3d_s', 'x3d_xs']
+print(VideoClassifier.get_backbone_details("x3d_xs"))
+
 # 2. Build the task
 model = VideoClassifier(backbone="x3d_xs", num_classes=datamodule.num_classes, pretrained=True)
 
 # 3. Create the trainer and finetune the model
-trainer = flash.Trainer(max_epochs=3, gpus=torch.cuda.device_count())
-trainer.finetune(model, datamodule=datamodule, strategy="freeze")
+trainer = flash.Trainer(max_epochs=200, gpus=torch.cuda.device_count())
+trainer.finetune(model, datamodule=datamodule, strategy="no_freeze")
 # trainer.fit(model, datamodule=datamodule)
-
-
-# # 4. Make a prediction
-# predictions = model.predict("data/kinetics/predict")
-# print(predictions)
-
-model.serializer = FiftyOneLabels(return_filepath=True)
-# predictions = trainer.predict(model, datamodule=datamodule)
-# session = visualize(predictions) # Launch FiftyOne
+filepaths = ["./videos/prediction"]
+predictions = model.predict("./videos/prediction")
+print(predictions)
 
 # 5. Save the model!
 trainer.save_checkpoint("video_classification.pt")
 
-predictions = model.predict("./videos/A")
-print(predictions)
 
-# # Option 2: Generate predictions from model using filepaths
-# filepaths = ["list", "of", "filepaths"]
-# predictions = model.predict(filepaths)
-# model.serializer = FiftyOneLabels()
-# session = visualize(predictions, filepaths=filepaths) # Launch FiftyOne
+# classifier = VideoClassifier.load_from_checkpoint("video_classification.pt")
+# trainer = flash.Trainer()
+# filepaths = ["/home/kenny/github/Laboratory-monitoring-system/videos/prediction/1638343809238978edit.mp4"]
+# predictions = classifier.predict(filepaths)
+# classifier.serializer = FiftyOneLabels()
 
 
-
-# session.wait()
+session = visualize(predictions, filepaths=filepaths) # Launch FiftyOne
+session.wait()

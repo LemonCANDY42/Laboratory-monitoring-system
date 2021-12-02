@@ -1,5 +1,5 @@
 import fiftyone as fo
-dataset_dir = "./videos"
+dataset_dir = "./videos/train"
 # Create the dataset
 dataset = fo.Dataset.from_dir(
     dataset_dir, fo.types.VideoClassificationDirectoryTree, name='dataset',
