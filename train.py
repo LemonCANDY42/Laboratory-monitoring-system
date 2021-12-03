@@ -81,27 +81,24 @@ print(VideoClassifier.available_backbones())
 # out: ['efficient_x3d_s', 'efficient_x3d_xs', ... ,slowfast_r50', 'x3d_m', 'x3d_s', 'x3d_xs']
 print(VideoClassifier.get_backbone_details("x3d_xs"))
 
-# 2. Build the task
-model = VideoClassifier(backbone="x3d_xs", num_classes=datamodule.num_classes, pretrained=True)
+# # 2. Build the task
+# model = VideoClassifier(backbone="x3d_xs", num_classes=datamodule.num_classes, pretrained=True)
+# # 3. Create the trainer and finetune the model
+# trainer = flash.Trainer(max_epochs=40, gpus=torch.cuda.device_count())
+# trainer.finetune(model, datamodule=datamodule, strategy="no_freeze")
+# # trainer.fit(model, datamodule=datamodule)
+# filepaths = ["/home/kenny/github/Laboratory-monitoring-system/videos/prediction/1638343809238978 [最优化的质量和大小] 00_00_26-00_00_36 [FastCopy].mp4"]
+# predictions = model.predict("./videos/prediction")
+# print(predictions)
+# # 5. Save the model!
+# trainer.save_checkpoint("video_classification.pt")
 
-# 3. Create the trainer and finetune the model
-trainer = flash.Trainer(max_epochs=200, gpus=torch.cuda.device_count())
-trainer.finetune(model, datamodule=datamodule, strategy="no_freeze")
-# trainer.fit(model, datamodule=datamodule)
-filepaths = ["./videos/prediction"]
-predictions = model.predict("./videos/prediction")
+
+classifier = VideoClassifier.load_from_checkpoint("video_classification.pt")
+classifier.serializer = FiftyOneLabels(return_filepath=True)
+trainer = flash.Trainer(gpus=1)
+filepaths = ["/home/kenny/github/Laboratory-monitoring-system/videos/train/stop/停止状态.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/other/干扰.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/work/Working.mp4"]
+predictions = classifier.predict(filepaths)
 print(predictions)
-
-# 5. Save the model!
-trainer.save_checkpoint("video_classification.pt")
-
-
-# classifier = VideoClassifier.load_from_checkpoint("video_classification.pt")
-# trainer = flash.Trainer()
-# filepaths = ["/home/kenny/github/Laboratory-monitoring-system/videos/prediction/1638343809238978edit.mp4"]
-# predictions = classifier.predict(filepaths)
-# classifier.serializer = FiftyOneLabels()
-
-
 session = visualize(predictions, filepaths=filepaths) # Launch FiftyOne
 session.wait()
