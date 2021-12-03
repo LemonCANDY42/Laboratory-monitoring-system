@@ -1,4 +1,5 @@
 import torch
+import os
 
 import flash
 from flash.core.data.utils import download_data
@@ -15,6 +16,7 @@ from pytorchvideo.transforms import ApplyTransformToKey, RandomShortSideScale, U
 from torch.utils.data.sampler import RandomSampler
 from torchvision.transforms import CenterCrop, Compose, RandomCrop, RandomHorizontalFlip
 
+from func import all_path
 
 # 2. Specify transforms to be used during training.
 # Flash helps you to place your transform exactly where you want.
@@ -97,8 +99,11 @@ print(VideoClassifier.get_backbone_details("x3d_xs"))
 classifier = VideoClassifier.load_from_checkpoint("video_classification.pt")
 classifier.serializer = FiftyOneLabels(return_filepath=True)
 trainer = flash.Trainer(gpus=1)
-filepaths = ["/home/kenny/github/Laboratory-monitoring-system/videos/train/stop/停止状态.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/other/干扰.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/work/Working.mp4"]
+
+# filepaths = ["/home/kenny/github/Laboratory-monitoring-system/videos/train/stop/停止状态.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/other/干扰.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/work/Working.mp4"]
+filepaths = all_path("/home/kenny/github/Laboratory-monitoring-system/videos/train/other/干扰1")
 predictions = classifier.predict(filepaths)
 print(predictions)
+
 session = visualize(predictions, filepaths=filepaths) # Launch FiftyOne
 session.wait()
