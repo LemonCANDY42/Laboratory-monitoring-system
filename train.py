@@ -48,11 +48,11 @@ def make_transform(
         ]),
     }
 
-from visualize_video import dataset
+from visualize_video import dataset,val_dataset
 train_dataset = dataset
 datamodule = VideoClassificationData.from_fiftyone(
     train_dataset=train_dataset,
-    # val_dataset=train_dataset,
+    val_dataset=val_dataset,
     clip_sampler="uniform",
     clip_duration=2,
     video_sampler=RandomSampler,
