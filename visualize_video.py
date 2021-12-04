@@ -2,11 +2,11 @@ import fiftyone as fo
 dataset_dir = "./videos/train"
 val_dataset_dir = "./videos/val"
 # Create the dataset
-dataset = fo.Dataset.from_dir(
-    dataset_dir, fo.types.VideoClassificationDirectoryTree, name='dataset',
+train_dataset = fo.Dataset.from_dir(
+    dataset_dir, fo.types.VideoClassificationDirectoryTree, name='train_dataset',
 )
 val_dataset = fo.Dataset.from_dir(
-    val_dataset_dir, fo.types.VideoClassificationDirectoryTree, name='dataset',
+    val_dataset_dir, fo.types.VideoClassificationDirectoryTree, name='val_dataset',
 )
 
 if __name__ == '__main__':
