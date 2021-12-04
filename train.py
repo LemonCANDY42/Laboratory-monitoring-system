@@ -21,7 +21,7 @@ from func import all_path
 # 2. Specify transforms to be used during training.
 # Flash helps you to place your transform exactly where you want.
 # Learn more at https://lightning-flash.readthedocs.io/en/latest/general/data.html#flash.data.process.Preprocess
-post_tensor_transform = [UniformTemporalSubsample(8), RandomShortSideScale(min_size=256, max_size=320)]
+post_tensor_transform = [UniformTemporalSubsample(16), RandomShortSideScale(min_size=256, max_size=320)]
 per_batch_transform_on_device = [K.Normalize(torch.tensor([0.45, 0.45, 0.45]), torch.tensor([0.225, 0.225, 0.225]))]
 
 train_post_tensor_transform = post_tensor_transform + [RandomCrop(244), RandomHorizontalFlip(p=0.5)]
