@@ -13,7 +13,7 @@ from pytorchvideo.accelerator.deployment.mobile_cpu.utils.model_conversion impor
 
 # model = VideoClassifier(backbone="x3d_m", num_classes=3, pretrained=False)
 model = VideoClassifier.load_from_checkpoint("x3d_m.pt")
-input_sample = torch.randn(1,3, 16, 224, 224, requires_grad=True)
+input_sample = torch.randn(1,3, 16, 244, 244, requires_grad=True)
 
 model.to_onnx("x3d_m.onnx", input_sample, export_params=True)
 # print(model.learning_rate)

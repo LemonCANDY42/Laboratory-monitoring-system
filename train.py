@@ -87,11 +87,11 @@ print(VideoClassifier.get_backbone_details("efficient_x3d_s"))
 # model = EfficientX3d(expansion='M', head_act='identity')
 
 # 2. Build the task
-model = VideoClassifier(backbone="x3d_m", num_classes=datamodule.num_classes, pretrained=True)
+# model = VideoClassifier(backbone="x3d_m", num_classes=datamodule.num_classes, pretrained=True)
 
-# # model = VideoClassifier.load_from_checkpoint("video_classification.pt")
+model = VideoClassifier.load_from_checkpoint("x3d_m.pt")
 # 3. Create the trainer and finetune the model
-trainer = flash.Trainer(max_epochs=1, gpus=torch.cuda.device_count())
+trainer = flash.Trainer(max_epochs=5, gpus=torch.cuda.device_count())
 model.serializer = FiftyOneLabels(return_filepath=True)
 trainer.finetune(model, datamodule=datamodule, strategy="no_freeze")#no_freeze
 # trainer.fit(model, datamodule=datamodule)
