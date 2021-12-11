@@ -26,3 +26,25 @@ Run vlc streaming on raspberrypi
 raspivid -o - -t 0 -n -w 600 -h 400 -fps 12 | cvlc -vvv stream:///dev/stdin --sout '#rtp{sdp=rtsp://:8081/}' :demux=h264
 
 ```
+
+(树莓派走代理)[https://www.cxyzjd.com/article/eininbebop/109139536]
+Code:
+
+sudo nano /etc/environment
+envirinment内输入：
+
+export http_proxy="http://username:password@proxyipaddress:proxyport"
+export https_proxy="http://username:password@proxyipaddress:proxyport"
+export no_proxy="localhost, 127.0.0.1"
+用代理的IP地址和端口替换proxyipaddress和proxyport。
+
+export http_proxy="http://10.60.190.10:7890"
+export https_proxy="http://10.60.190.10:7890"
+export no_proxy="localhost, 127.0.0.1"
+接下来
+
+sudo visudo
+将下面的行添加到文件中，这样sudo将使用您刚刚创建的环境变量:
+
+Defaults env_keep+="http_proxy https_proxy no_proxy"
+之后reboot就可以了
