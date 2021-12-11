@@ -212,6 +212,4 @@ $RECYCLE.BIN/
 
 # model
 *.pt
-*.ort
 *.onnx
-*.config

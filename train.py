@@ -81,34 +81,31 @@ datamodule = VideoClassificationData.from_fiftyone(
 # 0. List the available models
 print(VideoClassifier.available_backbones())
 # out: ['efficient_x3d_s', 'efficient_x3d_xs', ... ,slowfast_r50', 'x3d_m', 'x3d_s', 'x3d_xs']
-print(VideoClassifier.get_backbone_details("efficient_x3d_s"))
+print(VideoClassifier.get_backbone_details("x3d_m"))
 
-# from pytorchvideo.models.accelerator.mobile_cpu.efficient_x3d import EfficientX3d
-# model = EfficientX3d(expansion='M', head_act='identity')
-
-# 2. Build the task
+# # 2. Build the task
 # model = VideoClassifier(backbone="x3d_m", num_classes=datamodule.num_classes, pretrained=True)
 
-model = VideoClassifier.load_from_checkpoint("x3d_m.pt")
+# model = VideoClassifier.load_from_checkpoint("video_classification.pt")
 # 3. Create the trainer and finetune the model
-trainer = flash.Trainer(max_epochs=5, gpus=torch.cuda.device_count())
-model.serializer = FiftyOneLabels(return_filepath=True)
-trainer.finetune(model, datamodule=datamodule, strategy="no_freeze")#no_freeze
-# trainer.fit(model, datamodule=datamodule)
-filepaths = all_path("/home/kenny/github/Laboratory-monitoring-system/videos/prediction")
-predictions = model.predict(filepaths)
-print(predictions)
-# 5. Save the model!
-trainer.save_checkpoint("x3d_m.pt")
-
-# classifier = VideoClassifier.load_from_checkpoint("video_classification.pt")
-# classifier.serializer = FiftyOneLabels(return_filepath=True)
-# trainer = flash.Trainer(gpus=1)
-
-# # # filepaths = ["/home/kenny/github/Laboratory-monitoring-system/videos/train/stop/停止状态.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/other/干扰.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/work/Working.mp4"]
-# filepaths = all_path("/home/kenny/github/Laboratory-monitoring-system/videos/prediction")
-# predictions = classifier.predict(filepaths)
+# trainer = flash.Trainer(max_epochs=5, gpus=torch.cuda.device_count())
+# model.serializer = FiftyOneLabels(return_filepath=True)
+# trainer.finetune(model, datamodule=datamodule, strategy="freeze")#no_freeze
+# # trainer.fit(model, datamodule=datamodule)
+# filepaths = all_path("/home/kenny/github/Laboratory-monitoring-system/videos/1")
+# predictions = model.predict(filepaths)
 # print(predictions)
+# # 5. Save the model!
+# trainer.save_checkpoint("video_classification.pt")
+
+classifier = VideoClassifier.load_from_checkpoint("video_classification.pt")
+classifier.serializer = FiftyOneLabels(return_filepath=True)
+trainer = flash.Trainer(gpus=1)
+
+# filepaths = ["/home/kenny/github/Laboratory-monitoring-system/videos/train/stop/停止状态.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/other/干扰.mp4","/home/kenny/github/Laboratory-monitoring-system/videos/train/work/Working.mp4"]
+filepaths = all_path("/home/kenny/github/Laboratory-monitoring-system/videos/prediction")
+predictions = classifier.predict(filepaths)
+print(predictions)
 
 session = visualize(predictions, filepaths=filepaths) # Launch FiftyOne
 session.wait()

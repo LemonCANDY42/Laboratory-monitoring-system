@@ -5,9 +5,12 @@ Thank you my friend **Lindi Jiao** for your inspiration!
 
 
 1. https://qengineering.eu/install-64-os-on-raspberry-pi-zero-2.html
+1. https://qengineering.eu/install-raspberry-64-os.html
 1. [换源](https://blog.csdn.net/qq_41071754/article/details/113731699)
+1. 
 
-pytorchvideo/models/hub/x3d.py
-# kenny: Swish to Hardswish
-# from pytorchvideo.layers.swish import Swish
-from torch.nn import Hardswish
+moba-xterm > settings > x11 Settings > "Unix-compatible keyboard" 的复选框不要勾选，然后按照提示会自动重启x server，重新在pycharm运行代码就可以了
+
+https://blog.csdn.net/qxqxqzzz/article/details/104942021
+
+https://blog.csdn.net/qq_43765237/article/details/106032728
