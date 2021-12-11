@@ -14,3 +14,15 @@ moba-xterm > settings > x11 Settings > "Unix-compatible keyboard" 的复选框�
 https://blog.csdn.net/qxqxqzzz/article/details/104942021
 
 https://blog.csdn.net/qq_43765237/article/details/106032728
+
+https://zhuanlan.zhihu.com/p/51464024
+
+Run vlc streaming on raspberrypi
+
+`raspivid -o - -t 0 -n -w 600 -h 400 -fps 12 | cvlc -vvv stream:///dev/stdin --sout '#rtp{sdp=rtsp://:8081/}' :demux=h264`
+
+``` shell
+#!/bin/bash
+raspivid -o - -t 0 -n -w 600 -h 400 -fps 12 | cvlc -vvv stream:///dev/stdin --sout '#rtp{sdp=rtsp://:8081/}' :demux=h264
+
+```

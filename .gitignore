@@ -213,3 +213,4 @@ $RECYCLE.BIN/
 # model
 *.pt
 *.onnx
+models/*
