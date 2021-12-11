@@ -13,3 +13,4 @@ onnx_model = onnx.load('models/x3d_m.onnx')
 tf_rep = prepare(onnx_model)
 #Export TF model:
 tf_rep.export_graph('models/x3d_m')
+# very slow...
