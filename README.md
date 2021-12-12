@@ -8,6 +8,9 @@ Thank you my friend **Lindi Jiao** for your inspiration!
 1. https://qengineering.eu/install-raspberry-64-os.html
 1. [换源](https://blog.csdn.net/qq_41071754/article/details/113731699)
 1. 
+bcm2710-rpi-zero-2.dtb and bcm2710-rpi-zero-2-w.dtb
+
+
 
 moba-xterm > settings > x11 Settings > "Unix-compatible keyboard" 的复选框不要勾选，然后按照提示会自动重启x server，重新在pycharm运行代码就可以了
 
@@ -48,3 +51,14 @@ sudo visudo
 
 Defaults env_keep+="http_proxy https_proxy no_proxy"
 之后reboot就可以了
+
+代理 https://blog.csdn.net/weixin_41010198/article/details/87929622
+
+遇到  gnutls_handshake() failed: The TLS connection was non-properly terminated.
+关闭vpn，然后ssl设置false
+
+Add this to your run command:
+
+-v /etc/hosts:/etc/hosts
+
+fuck https://google-coral.github.io/py-repo/tflite-runtime/
