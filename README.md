@@ -41,8 +41,8 @@ export https_proxy="http://username:password@proxyipaddress:proxyport"
 export no_proxy="localhost, 127.0.0.1"
 用代理的IP地址和端口替换proxyipaddress和proxyport。
 
-export http_proxy="http://10.60.190.10:7890"
-export https_proxy="http://10.60.190.10:7890"
+export http_proxy="http://192.168.0.116:7890"
+export https_proxy="http://192.168.0.116:7890"
 export no_proxy="localhost, 127.0.0.1"
 接下来
 
