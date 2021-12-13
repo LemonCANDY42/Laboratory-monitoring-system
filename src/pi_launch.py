@@ -17,10 +17,13 @@ def zip_stream(cap):
   # take frame 读取帧
   # frame (H,W,C)
   origin = []
+  frame_list = []
   for i in range(16):
     ret, frame = cap.read()
     if ret:
-      origin.append(np.expand_dims(cv.resize(frame,(244,244)),axis=0))
+      frame_list.append(frame)
+  for i in frame_list:
+    origin.append(np.expand_dims(cv.resize(i,(244,244)),axis=0))
   # to "BCTHW"
   video_array = np.transpose(np.expand_dims(np.vstack(origin),axis=0),(0,4,1,2,3))
   return video_array
