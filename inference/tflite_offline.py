@@ -33,7 +33,7 @@ if __name__ == '__main__':
     #print(a.shape)
     
     # Load the TFLite model and allocate tensors
-    interpreter = tflite.Interpreter(model_path="models/x3d_m_Optimize.tflite")
+    interpreter = tflite.Interpreter(model_path="models/x3d_m_Optimize.tflite",num_threads=4)
     interpreter.allocate_tensors()
 
     # Get input and output tensors
