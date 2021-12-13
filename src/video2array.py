@@ -24,7 +24,7 @@ def video_to_array(path = '../video/New directory'):
                     ret,_buf = cap.read()
                     buf[fc] = cv2.resize(_buf,(244,244))
                     fc += 1
-                buf = np.expand_dims(np.transpose(np.array(buf),(3,0,1,2)),axis=0)
+                buf = np.transpose(np.array(buf),(3,0,1,2))
                 video_array.append(buf)
             except Exception as e:
                 print(e)
