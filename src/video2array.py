@@ -19,17 +19,23 @@ def video_to_array(path = '../video/New directory'):
             buf = np.empty((16, 244, 244,3), np.dtype('uint8'))
             fc = 0
             ret = True
-            while (fc < 16  and ret):
-                ret,_buf = cap.read()
-                buf[fc] = cv2.resize(_buf,(244,244))
-                fc += 1
-            buf = np.expand_dims(np.transpose(np.array(buf),(3,0,1,2)),axis=0)
-            video_array.append(buf)
+            try:
+                while (fc < 16  and ret):
+                    ret,_buf = cap.read()
+                    buf[fc] = cv2.resize(_buf,(244,244))
+                    fc += 1
+                buf = np.expand_dims(np.transpose(np.array(buf),(3,0,1,2)),axis=0)
+                video_array.append(buf)
+            except Exception as e:
+                print(e)
+        print(len(video_array))
 
         cap.release()
 
     return video_array
 
+if __name__ == "__main__":
+    video_to_array()
 
 # cv2.namedWindow('frame 10')
 # cv2.imshow('frame 10', buf[9])
