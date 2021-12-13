@@ -16,7 +16,7 @@ def video_to_array(path = '../video/New directory'):
 
         #BCTHW
         for i in range(count):
-            buf = np.empty((16, 244, 244,3), np.dtype('uint8'))
+            buf = np.empty((16, 244, 244,3), np.dtype('float32'))
             fc = 0
             ret = True
             try:
@@ -24,7 +24,7 @@ def video_to_array(path = '../video/New directory'):
                     ret,_buf = cap.read()
                     buf[fc] = cv2.resize(_buf,(244,244))
                     fc += 1
-                buf = np.transpose(np.array(buf),(3,0,1,2))
+                buf = np.transpose(np.array(buf).astype(np.float32),(3,0,1,2))
                 video_array.append(buf)
             except Exception as e:
                 print(e)
