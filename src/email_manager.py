@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 from email.mime.image import MIMEImage
 from email.header import Header
 from email.mime.message import MIMEMessage
@@ -33,7 +34,7 @@ class EmailManager:
             subject = Header(header, 'utf-8').encode()
             msg['Subject'] = subject
             # 设置邮件发送者
-            msg['From'] = 'QInvestment<{0}>'.format(self.email)
+            msg['From'] = '实验室监控<{0}>'.format(self.email)
             
             # 设置邮件接受者
             _to = ''
@@ -44,13 +45,13 @@ class EmailManager:
                 _to = _to+'<{0}>'.format(self.recv_email)
             msg['To'] = _to
             if file_list:
-                for _file,file_name in file_list:
+                for file_name in file_list:
                     # 添加文件附件
-                    file = MIMEText(open(_file, 'rb').read(), 'base64', 'utf-8')
+                    file = MIMEApplication(open(file_name, 'rb').read())
                     file["Content-Disposition"] = f'attachment; filename="{file_name}"'
                     msg.attach(file)
 
-            _message = MIMEText(message, 'plain', 'utf-8')
+            _message = MIMEText(message+"\n Author: Kenny \n Email:l.w.r.f.42@gmail.com", 'plain', 'utf-8')
             msg.attach(_message)
             print(msg)
             # 3.发送邮件

@@ -17,13 +17,14 @@ converter.optimizations = [tf.lite.Optimize.DEFAULT]
 converter.representative_dataset = representative_data_gen
 # converter.target_spec.supported_types = [tf.float16,]
 converter.target_spec.supported_ops = [
-    tf.lite.OpsSet.TFLITE_BUILTINS_INT8,
+    tf.float16,
+    tf.lite.OpsSet.TFLITE_BUILTINS,
     tf.lite.OpsSet.SELECT_TF_OPS,
                                        ]# tf.lite.OpsSet.SELECT_TF_OPS,,TFLITE_BUILTINS_INT8
-converter.inference_input_type = tf.uint8
-converter.inference_output_type = tf.uint8
+# converter.inference_input_type = tf.uint8
+# converter.inference_output_type = tf.uint8
 tflite_model = converter.convert()
 
 # Save the model
-with open('../models/x3d_m_Optimize_DEFAULT_int8.tflite', 'wb') as f:
+with open('../models/x3d_m_Optimize_DEFAULT_fp16.tflite', 'wb') as f:
     f.write(tflite_model)
