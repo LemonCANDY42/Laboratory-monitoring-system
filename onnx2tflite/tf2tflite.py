@@ -18,6 +18,7 @@ converter.representative_dataset = representative_data_gen
 # converter.target_spec.supported_types = [tf.float16,]
 converter.target_spec.supported_ops = [
     tf.lite.OpsSet.TFLITE_BUILTINS_INT8,
+    tf.lite.OpsSet.SELECT_TF_OPS,
                                        ]# tf.lite.OpsSet.SELECT_TF_OPS,,TFLITE_BUILTINS_INT8
 converter.inference_input_type = tf.uint8
 converter.inference_output_type = tf.uint8
