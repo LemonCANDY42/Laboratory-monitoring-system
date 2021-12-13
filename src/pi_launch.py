@@ -69,7 +69,7 @@ if __name__ == '__main__':
           pass
       result_lists.append(True if result_id == 1 else False)
       result = result_dict[result_id]
-      print(result,result_list,all(result_lists),f"cost time:{time.time()-start}")
+      print(result+"\n")
       if all(result_lists) and len(result_lists)>5:
         with NamedTemporaryFile(suffix='.mp4') as f:
           video = cv.VideoWriter(f.name, cv.VideoWriter_fourcc(*"mp4v"), fps, (480, 480))
