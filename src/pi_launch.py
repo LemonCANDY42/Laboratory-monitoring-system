@@ -71,28 +71,40 @@ if __name__ == '__main__':
       result = result_dict[result_id]
       print(result+"\n")
       if all(result_lists) and len(result_lists)>5:
-        with NamedTemporaryFile(suffix='.mp4') as f:
-          video = cv.VideoWriter(f.name, cv.VideoWriter_fourcc(*"mp4v"), fps, (480, 480))
-          frame_list = []
-          for i in range(120):
-          # take frame ��ȡ֡
-            ret, frame = cap.read()
-            if ret:
-              frame_list.append(frame)
-          for i in frame_list:
-            video.write(i) 
-          video.release()
-          f.seek(0)
-          if first:
+        if first:
+          with NamedTemporaryFile(suffix='.mp4') as f:
+            video = cv.VideoWriter(f.name, cv.VideoWriter_fourcc(*"mp4v"), fps, (480, 480))
+            frame_list = []
+            for i in range(120):
+            # take frame ��ȡ֡
+              ret, frame = cap.read()
+              if ret:
+                frame_list.append(frame)
+            for i in frame_list:
+              video.write(i) 
+            video.release()
+            f.seek(0)
             em.send_msg(str(result_list),header=result,file_list=[f.name])
             point = time.time()
-          else:
-            if time.time() - point>900:
+        else:
+          # 15分钟重发
+          if time.time() - point>900:
+            with NamedTemporaryFile(suffix='.mp4') as f:
+              video = cv.VideoWriter(f.name, cv.VideoWriter_fourcc(*"mp4v"), fps, (480, 480))
+              frame_list = []
+              for i in range(120):
+              # take frame ��ȡ֡
+                ret, frame = cap.read()
+                if ret:
+                  frame_list.append(frame)
+              for i in frame_list:
+                video.write(i) 
+              video.release()
+              f.seek(0)
               em.send_msg(str(result_list),header=result,file_list=[f.name])
               point = time.time()
-          first = False
+        first = False
           
-        break
     except KeyError as e:
       em.send_msg(str(e),header="KeyError!")
       cap.release()
