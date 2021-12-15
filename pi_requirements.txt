@@ -1,0 +1,13 @@
+click==8.0.3
+docopt==0.6.2
+Flask==2.0.2
+flatbuffers==20181003210633
+itsdangerous==2.0.1
+Jinja2==3.0.3
+MarkupSafe==2.0.1
+numpy==1.19.5
+onnxruntime==1.10.0
+pqi==2.0.6
+protobuf==3.19.1
+tflite-runtime @ file:///home/pi/Laboratory-monitoring-system/tflite_runtime-2.7.0-cp38-none-linux_aarch64.whl
+Werkzeug==2.0.2
