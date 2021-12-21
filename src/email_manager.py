@@ -9,7 +9,7 @@ from copy import deepcopy
 from tkinter import E
 
 class EmailManager:
-    def __init__(self,email='545410124@qq.com'):
+    def __init__(self,email='124730012@qq.com'):
         self.email = email
         self.is_sending = False
         self.count = 0
@@ -19,9 +19,9 @@ class EmailManager:
         # 1. 连接邮箱服务器
         self.con = smtplib.SMTP_SSL('smtp.qq.com', 465)
         # 2. 登录邮箱
-        self.con.login(self.email, 'brhbkqrtlllcbeec')
+        self.con.login(self.email, 'uldmmfttwrtdcaeh')
     
-    def set_recv(self,recv_email = '245550353@qq.com'):
+    def set_recv(self,recv_email = '124730012@qq.com'):
         # recv_email can be a list 
         self.recv_email = recv_email
 
@@ -69,7 +69,7 @@ class EmailManager:
 
 if __name__ == "__main__":
     e = EmailManager()
-    e.set_recv(recv_email = ["245550353@qq.com","l.w.r.f.42@outlook.com"])
+    e.set_recv(recv_email = ["124730012@qq.com","l.w.r.f.42@outlook.com"])
     e.connect()
     e.send_msg()
     print(e.con)
