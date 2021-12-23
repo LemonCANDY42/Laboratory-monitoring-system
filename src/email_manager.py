@@ -53,7 +53,6 @@ class EmailManager:
 
             _message = MIMEText(message+"\n Author: Kenny \n Email:l.w.r.f.42@gmail.com", 'plain', 'utf-8')
             msg.attach(_message)
-            print(msg)
             # 3.发送邮件
             self.con.sendmail(self.email, self.recv_email, msg.as_string())
         except Exception as e:

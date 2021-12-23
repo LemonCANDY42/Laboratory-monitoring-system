@@ -34,7 +34,7 @@ if __name__ == '__main__':
   point = time.time()
   first = True
   em = EmailManager()
-  em.set_recv(recv_email = ["245550353@qq.com","l.w.r.f.42@outlook.com"])
+  em.set_recv(recv_email = ["124730012@qq.com","l.w.r.f.42@outlook.com"])
   em.connect()
   # 读取设备
   cap = cv.VideoCapture(0)
